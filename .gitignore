@@ -1,0 +1,6 @@
+# infrastructure
+.terraform/
+.terraform.*
+*.tfstate*
+projectnotes.txt
+.vscode/
