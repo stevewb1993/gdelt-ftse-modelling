@@ -4,3 +4,8 @@
 *.tfstate*
 projectnotes.txt
 .vscode/
+
+
+# cloud functions
+__pycache__
+cloud_functions/yahoo_finance_ingestion/test_request.json

@@ -1,0 +1,10 @@
+pandas~=1.3.0
+gspread_dataframe
+gspread~=3.7.0
+python-dotenv~=0.18.0
+google.cloud
+google-cloud-bigquery
+typing~=3.7.4.3
+google~=3.0.0
+google-api-python-client
+pyarrow
