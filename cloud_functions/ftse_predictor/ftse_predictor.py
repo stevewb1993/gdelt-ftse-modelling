@@ -9,7 +9,7 @@ MODEL_NAME = "gdelt_ftse_regression_model"
 PREDICTIONS_SPREADSHEET_NAME = "predictions"
 
 
-def run_ai_platform_prediction(project: str, model: str, instances, version=None):
+def run_ai_platform_prediction(project: str, model: str, instances, version=None) -> float:
     """Send json data to a deployed model for prediction.
     Args:
         project (str): project where the AI Platform Model is deployed.
@@ -46,6 +46,16 @@ def run_ai_platform_prediction(project: str, model: str, instances, version=None
 
 
 def get_gdelt_data(bq_client: bigquery.Client, event_date: str) -> pd.DataFrame:
+    """
+    returns summarised GDELT event data for a given date
+
+    Args:
+        bq_client: bigquery client
+        event_date: date to retrive summarised information for
+
+    Returns:
+        pd.Dataframe: summarised GDELT events
+    """
     base_query: str = f"""
                             SELECT
                                 PARSE_DATE("%Y%m%d",CAST(SQLDATE as string)) as EventDate
@@ -72,11 +82,28 @@ def get_gdelt_data(bq_client: bigquery.Client, event_date: str) -> pd.DataFrame:
     )
 
 
-def parse_gdelt_to_model_format(df: pd.DataFrame):
+def parse_gdelt_to_model_format(df: pd.DataFrame) -> list:
+    """
+    parses gdelt dataframe into suitable format for regression model
+    Args:
+        df: summarised GDELT data
+
+    Returns:
+        list: summarised gdelt data in format for regression model
+    """
     return df[["AvgTone", "StdDevTone", "AvgGoldstein", "StdDevGoldstein"]].values.tolist()
 
 
-def parse_ftse_predictions_as_df(model_prediction: float, request_date) -> pd.DataFrame:
+def parse_ftse_predictions_as_df(model_prediction: float, request_date: str) -> pd.DataFrame:
+    """
+    parses the AI platform prediction into dataframe format
+    Args:
+        model_prediction: prediction from the model
+        request_date: date of the prediction
+
+    Returns:
+        pd.DataFrame: dataframe of ftse prediction
+    """
     data = [[request_date, model_prediction]]
     return pd.DataFrame(data, columns=['request_date', 'model_prediction'])
 

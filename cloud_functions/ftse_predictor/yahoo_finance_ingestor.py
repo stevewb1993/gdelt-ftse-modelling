@@ -23,6 +23,18 @@ def ingest_yahoo_finance_data() -> None:
 
 def get_historical_prices(tickr: str, start_date: str, end_date: str, index_as_date: bool,
                           interval: str) -> pd.DataFrame:
+    """
+
+    Args:
+        tickr: tickr of instrument to be valued
+        start_date: start date of request
+        end_date: end date of request
+        index_as_date: whether the date should be the index of the df
+        interval: daily, weekly etc
+
+    Returns:
+        pd.DataFrame: dataframe of prices
+    """
     # Get historical FTSE data that can be used for training and testing
     return get_data(tickr, start_date=start_date, end_date=end_date, index_as_date=index_as_date, interval=interval)
 
