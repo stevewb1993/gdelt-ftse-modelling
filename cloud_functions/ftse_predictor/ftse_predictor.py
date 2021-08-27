@@ -1,18 +1,12 @@
 import pandas as pd
 from googleapiclient import discovery
-from google_sheets_helper import GoogleSheetsHelper
-from dotenv import load_dotenv
-import os
+from utils.google_sheets_helper import GoogleSheetsHelper
 import logging
 from google.cloud import bigquery
-from config import PROJECT_ID, GOOGLE_SHEET_ID
+from config import PROJECT_ID, GOOGLE_SHEET_ID, SERVICE_ACCOUNT_CREDENTIALS
 
-load_dotenv()
-
-PROJECT_ID = "gdelt-ftse"
 MODEL_NAME = "gdelt_ftse_regression_model"
 PREDICTIONS_SPREADSHEET_NAME = "predictions"
-
 
 
 def run_ai_platform_prediction(project: str, model: str, instances, version=None):
@@ -106,10 +100,7 @@ def get_model_prediction(request_date: str):
     logging.info("successfully parsed predictions")
 
     # use google sheets client to save down data
-    logging.info("attempting to get service account creds")
-    service_account_credentials: dict = eval(os.environ.get("service_account_credentials"))
-    logging.info(f"credentials are: {service_account_credentials}")
-    google_sheets_helper = GoogleSheetsHelper(service_account_credentials)
+    google_sheets_helper = GoogleSheetsHelper(SERVICE_ACCOUNT_CREDENTIALS)
     google_sheets_helper.append_df_to_google_sheet(GOOGLE_SHEET_ID, PREDICTIONS_SPREADSHEET_NAME,
                                                    parsed_predictions)
 

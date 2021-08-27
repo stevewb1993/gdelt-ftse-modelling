@@ -8,3 +8,4 @@ typing~=3.7.4.3
 google~=3.0.0
 google-api-python-client
 pyarrow
+yahoo_fin
