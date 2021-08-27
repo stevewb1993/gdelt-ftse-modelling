@@ -15,6 +15,10 @@ resource "google_project_service" "ai-platform-api" {
 resource "google_ml_engine_model" "gdelt_ftse_regression_model" {
   name        = "gdelt_ftse_regression_model"
   regions     = ["europe-west1"]
+  default_version {
+    name = "projects/gdelt-ftse/models/gdelt_ftse_regression_model/versions/v1"
+  }
+
 }
 
 resource "google_storage_bucket_object" "ml-model-file" {

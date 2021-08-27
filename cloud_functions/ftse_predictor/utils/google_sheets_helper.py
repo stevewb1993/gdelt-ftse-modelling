@@ -61,3 +61,4 @@ class GoogleSheetsHelper:
         else:
             logging.info("no data in sheet. loading fresh df")
             set_with_dataframe(ws, df)
+
