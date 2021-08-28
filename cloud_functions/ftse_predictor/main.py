@@ -1,7 +1,9 @@
-from ftse_predictor import get_model_prediction
 import logging
 from datetime import datetime
+
 from yahoo_finance_ingestor import ingest_yahoo_finance_data
+
+from ftse_predictor import get_model_prediction
 
 
 def handle_api_request(request):
@@ -14,7 +16,7 @@ def handle_api_request(request):
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
 
-    request_date = datetime.today().strftime('%Y-%m-%d')
+    request_date = datetime.today().strftime("%Y-%m-%d")
     logging.info(f"request date is: {request_date}")
 
     get_model_prediction(request_date=request_date)
